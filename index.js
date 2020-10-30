@@ -100,7 +100,7 @@ async function processBuildInfo(buildPath) {
         console.log('\nLargest Imported Modules: ')
         for (let i = 0; i < maxReport; i++) {
             const mod = importedModules[i]
-            console.log(toHumanSize(mod.size).padEnd(10, ' '), mod.name)
+            console.log(toHumanSize(mod.size).padEnd(10, ' '), `${mod.count}`.padEnd(5, ' '), mod.name)
         }
 
         console.log('\nImport Paths:')
