@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs').promises;
 const path = require('path');
 if (process.argv.length < 3) throw new Error('No paths provided')
@@ -72,6 +74,9 @@ async function processDts(dTsPath) {
     return { name: moduleName || '_self_', size: existingSize }
 }
 
+/**
+ * @param {string} buildPath 
+ */
 async function processBuildInfo(buildPath) {
     console.log('\n-- Processing', buildPath)
     const fileData = await fs.readFile(buildPath)
@@ -129,9 +134,7 @@ async function processTsConfig(configPath) {
     for (const ref of fileData.references) {
         const buildInfoPath = path.join(basePath, ref.path, 'tsconfig.tsbuildinfo')
         await processBuildInfo(buildInfoPath)
-            // console.log()
     }
-    // console.log(fileData)
 }
 
 
