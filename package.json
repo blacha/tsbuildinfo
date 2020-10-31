@@ -6,5 +6,16 @@
   "license": "MIT",
   "bin": {
     "tsbuildinfo": "index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.ts' --quiet --fix ",
+    "test": "",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+  },
+  "devDependencies": {
+    "@linzjs/style": "^0.4.1",
+    "@types/node": "^14.14.6",
+    "conventional-changelog-cli": "^2.1.0"
   }
 }
