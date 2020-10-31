@@ -10,7 +10,6 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts' --quiet --fix ",
-    "test": "",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "devDependencies": {
