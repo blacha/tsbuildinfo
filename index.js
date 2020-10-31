@@ -4,7 +4,8 @@ if (process.argv.length < 3) throw new Error('No paths provided')
 const paths = process.argv.slice(2);
 
 
-const MaxReport = 20;
+const MaxReport = 5;
+const IgnoreModules = new Set([]) // ['typescript', '@types/node'])
 const PathStat = new Map()
 const NodeModules = 'node_modules'
 const HumanSize = ['B', 'KB', 'MB', 'GB']
@@ -72,7 +73,7 @@ async function processDts(dTsPath) {
 }
 
 async function processBuildInfo(buildPath) {
-    console.log('Processing', buildPath)
+    console.log('\n-- Processing', buildPath)
     const fileData = await fs.readFile(buildPath)
     const buildInfo = JSON.parse(fileData);
     if (buildInfo.version == null) throw new Error('Invalid build version');
@@ -100,13 +101,14 @@ async function processBuildInfo(buildPath) {
         console.log('\nLargest Imported Modules: ')
         for (let i = 0; i < maxReport; i++) {
             const mod = importedModules[i]
+            if (IgnoreModules.has(mod.name)) continue;
             console.log(toHumanSize(mod.size).padEnd(10, ' '), `${mod.count}`.padEnd(5, ' '), mod.name)
         }
 
         console.log('\nImport Paths:')
         for (let i = 0; i < maxReport; i++) {
             const mod = importedModules[i]
-
+            if (IgnoreModules.has(mod.name)) continue;
             const importPaths = findImportPath(importMap, mod.name);
             if (importPaths == null) {
                 continue;
@@ -118,11 +120,27 @@ async function processBuildInfo(buildPath) {
     }
 }
 
+async function processTsConfig(configPath) {
+    const fileData = JSON.parse(await fs.readFile(configPath));
+
+    if (fileData.references == null) throw new Error('tsconfig.json needs a "references"')
+
+    const basePath = path.dirname(configPath);
+    for (const ref of fileData.references) {
+        const buildInfoPath = path.join(basePath, ref.path, 'tsconfig.tsbuildinfo')
+        await processBuildInfo(buildInfoPath)
+            // console.log()
+    }
+    // console.log(fileData)
+}
+
 
 async function main() {
     for (const path of paths) {
         if (path.endsWith('tsconfig.tsbuildinfo')) {
             await processBuildInfo(path)
+        } else if (path.endsWith('tsconfig.json')) {
+            await processTsConfig(path)
         }
     }
 }
