@@ -6,7 +6,7 @@ Tool to debug slow build times by looking for large type definitions that may ha
 In some typescript projects AWS-SDK has been a very large source of typescript compile slowdowns.
 by switching form a base import to directly importing the s3 client the build times for one package went from 6 seconds down to 2 seconds.
 
-```
+```typescript
 // Bad
 import * as AWS from 'aws-sdk';
 
