@@ -7,6 +7,10 @@
   "bin": {
     "tsbuildinfo": "index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blacha/tsbuildinfo"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts' --quiet --fix ",
