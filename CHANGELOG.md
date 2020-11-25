@@ -1,3 +1,12 @@
+## [0.0.3](https://github.com/blacha/tsbuildinfo/compare/v0.0.2...v0.0.3) (2020-11-25)
+
+
+### Bug Fixes
+
+* correctly package all built files ([6b018ca](https://github.com/blacha/tsbuildinfo/commit/6b018ca6fba5ef0eb37feac6b871deacd8475163))
+
+
+
 ## 0.0.2 (2020-10-31)
 
 
