@@ -17,7 +17,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "@linzjs/style": "^0.4.2",
+    "@linzjs/style": "^3.9.0",
     "@types/node": "^14.14.19",
     "conventional-changelog-cli": "^2.1.1"
   },
